@@ -1,0 +1,35 @@
+name: Nightly
+on:
+  schedule:
+    - cron: "*/15 * * * *"     # every 15 minutes, just for testing
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make a report
+        run: |
+          mkdir output
+          echo "Report generated at $(date -u)" > output/report.txt
+          echo "Triggered by: ${{ github.event_name }}" >> output/report.txt
+          python hello.py >> output/report.txt
+          cat output/report.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: output/
+          retention-days: 3      # auto-delete after 3 days
+
+  use-report:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: report
+      - run: |
+          echo "Second job got the file from the first job:"
+          cat report.txt
+          
