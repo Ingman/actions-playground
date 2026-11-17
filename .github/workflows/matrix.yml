@@ -1,0 +1,23 @@
+name: Matrix
+on: workflow_dispatch          # manual only, so it won't run on every commit
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python hello.py
+
+  report:
+    needs: test                # waits until every test job succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All 4 test jobs passed!"
+      
