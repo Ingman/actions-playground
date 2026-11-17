@@ -1,7 +1,7 @@
 name: Nightly
 on:
   schedule:
-    - cron: "*/15 * * * *"     # every 15 minutes, just for testing
+    - cron: "0 14 * * *"     # daily at 6 AM Pacific
   workflow_dispatch:
 
 jobs:
