@@ -1,0 +1,12 @@
+name: Hello
+on: [push, workflow_dispatch]
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello from GitHub Actions!"
+      - run: |
+          echo "Repo: ${{ github.repository }}"
+          echo "Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
+          uname -a
