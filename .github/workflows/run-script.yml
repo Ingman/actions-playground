@@ -5,7 +5,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4       # copies your repo onto the runner
+
       - uses: actions/setup-python@v5   # installs Python
         with:
           python-version: "3.12"
